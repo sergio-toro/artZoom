@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>ArtZoom image zoom plugin</title>
+
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+        <!-- Colorbox for integration -->
+        <link rel="stylesheet" type="text/css" href="colorbox/j.colorbox.css" />
+        <script type="text/javascript" src="colorbox/j.colorbox.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="../css/j.artzoom.css" />
+        <script type="text/javascript" src="../js/j.artzoom.js"></script>
+
+        <style type="text/css">
+            /*********************************************************************
+             * REQUIRED CSS (FIX)
+             * Prevent show HTML inside slideshow without artslide loaded
+             ********************************************************************/
+            div.featured_products{ display: none; }
+
+            /*********************************************************************
+             * STYLESHEET FOR DEMO
+             ********************************************************************/
+            body { padding: 50px 25px; }
+            h1 {  }
+            div.featured_products{ margin: auto; display: none; }
+        </style>
+    </head>
+    <body>
+        <a href="http://blog.art4websites.com/artzoom-simple-image-zoom-para-jquery">Go back to plugin page and documentation</a>
+        <h1>ArtZoom Demostration</h1>
+
+        <h3>Simple image zoom (autodetect colorbox)</h3>
+        <div class="sample1">
+            <a href="img/1.jpg" data-big-thumb="img/450x300/1.jpg" data-small-thumb="img/150x150/1.jpg"
+               data-title="Sample image" data-alt="Sample alternative">
+            </a>
+        </div>
+
+        <h3>Colorbox integration off, custom width</h3>
+        <div class="sample2">
+            <a href="img/2.jpg" data-big-thumb="img/450x300/2.jpg" data-small-thumb="img/150x150/2.jpg"
+               data-title="Sample image" data-alt="Sample alternative">
+            </a>
+        </div>
+
+        <h3>Gallery</h3>
+        <div class="sample3">
+            <a href="img/3.jpg" data-big-thumb="img/450x300/3.jpg" data-small-thumb="img/150x150/3.jpg"
+               data-title="Sample image 1" data-alt="Sample alternative">
+            </a>
+            <a href="img/4.jpg" data-big-thumb="img/450x300/4.jpg" data-small-thumb="img/150x150/4.jpg"
+               data-title="Sample image 2" data-alt="Sample alternative">
+            </a>
+            <a href="img/5.jpg" data-big-thumb="img/450x300/5.jpg" data-small-thumb="img/150x150/5.jpg"
+               data-title="Sample image 3" data-alt="Sample alternative">
+            </a>
+            <a href="img/1.jpg" data-big-thumb="img/450x300/1.jpg" data-small-thumb="img/150x150/1.jpg"
+               data-title="Sample image 4" data-alt="Sample alternative">
+            </a>
+            <a href="img/2.jpg" data-big-thumb="img/450x300/2.jpg" data-small-thumb="img/150x150/2.jpg"
+               data-title="Sample image 5" data-alt="Sample alternative">
+            </a>
+        </div>
+        <script type="text/javascript">
+            $(function(){
+                /*********************************************************************
+                 * INIT simpleslide
+                 ********************************************************************/
+                $("div.sample1").artzoom();
+                $("div.sample2").artzoom({ width: 350, colorboxIntegration: false });
+                $("div.sample3").artzoom();
+            });
+        </script>
+    </body>
+</html>

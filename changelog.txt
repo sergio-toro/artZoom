@@ -1,0 +1,9 @@
+/* ArtZoom v0.1 - A light-weight, customizable image zoom plugin for jQuery with colorbox integration
+ *
+ * Copyright (c) 2011 Sergio Toro - sergio@art4websites.com
+ * Pluguin url: http://blog.art4websites.com/artzoom-simple-image-zoom-para-jquery
+ *
+ * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+ */
+
+0.1 First release
