@@ -232,7 +232,7 @@
                     $this.append($('<img src="'+data.smallThumb+'" title="'+(data.title ? data.title : '')+'" />'));
                 });
                 $galleryOuter = $('<div class="az-gal-relative"/>');
-                $galleryControls = $('<a href="javascript:;" class="az-gal-control az-disabled az-gal-prev" data-type="previous">'+s.prevText+'</a><a href="javascript:;" class="az-gal-control az-gal-next" data-type="next">'+s.nextText+'</a>');
+                $galleryControls = $('<a href="javascript:;" class="az-gal-control az-disabled az-gal-prev" data-type="previous">'+(s.prevText ? s.prevText : '&nbsp')+'</a><a href="javascript:;" class="az-gal-control az-gal-next" data-type="next">'+(s.nextText ? s.nextText : '&nbsp;')+'</a>');
                 $galleryImgs = $('img',$gallery);
 
                 $gallery
