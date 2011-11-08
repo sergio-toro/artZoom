@@ -13,6 +13,7 @@
 .az-container a.az-colorbox-trigger:hover{ opacity: 1; }
 .az-container span.az-colorbox-text{ font: 12px/30px Arial; color: #FFF; white-space: nowrap; }
 
+.az-container a.az-main img{ height: auto; width: auto; max-width: none; max-height: none; }
 /* NEEDED STYLES */
 .az-container{ position: relative; }
 .az-container a.az-colorbox-trigger { position: absolute; display: none; background: url("artzoom/search.png") no-repeat 10px 50% transparent; }
@@ -23,4 +24,4 @@
 .az-container div.az-gal-container{ position: relative; overflow: hidden; }
 .az-container ul.az-gal-carrusel { position: absolute; margin: 0px; padding: 0px; list-style: none; top: 0px; left: 0px; clear: both; }
 .az-container li.az-gal-item { display: block; margin: 0px; padding: 0px; list-style: none; float: left; }
-.az-container a.az-gal-control { display: block; position: absolute; }
+.az-container a.az-gal-control { display: none; position: absolute; }

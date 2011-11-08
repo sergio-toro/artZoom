@@ -14,9 +14,11 @@
             height: 'auto',
             distance: 25,
             zIndex: 100,
+            update: 35,
             enableGallery: true,
             galleryMargin: 5,
             gallerySpeed: 250,
+            showControls: true,
             prevText: '&laquo;',
             nextText: '&raquo;',
             colorboxIntegration: true,
@@ -44,8 +46,9 @@
             $main.addClass('az-main');
             // THUMBNAIL
             var maData = $main.data();
-            var $thumb = $($('<img src="'+maData.bigThumb+'" alt="'+(maData.alt ? maData.alt : '')+'" title="'+(maData.title ? maData.title : '')+'" />'));
-            var $imgZoom;
+            var thumbTitle;
+            var thumb;
+            var $thumb;
 
             // GALERIA
             var $gallery = $('> a',$this).not('.az-main');
@@ -72,7 +75,6 @@
             var thHeight;
             var zoomWidth;
             var zoomHeight;
-            var offset;
             var ratioX;
             var ratioY
             var x;
@@ -91,7 +93,6 @@
             .append($zoomContainer);
 
             $main
-            .append($thumb)
             .addClass('az-cursor')
             .click(function(e){
                 e.preventDefault();
@@ -126,23 +127,28 @@
             if($gallery.length && galleryEnabled)
                 setupGallery();
             // Set up plugin
+            thumb = new Image();
+            thumb.src = maData.bigThumb;
+            thumbTitle = (maData.title ? maData.title : '');
             setup();
-            // If thumb cannot be loaded
-            $thumb.error(function(){
-                $.error('ArtZoom: Unable to load the image, check the route.');
-            });
+
             /*******************************************************************
              * FUNCIONES
              ******************************************************************/
             function setup(){
                 // Cuando la miniatura este cargada iniciar el plugin
-                if (!$thumb || img_error($thumb[0])){
+                if (!thumb || img_error(thumb)){
                     setTimeout(setup,200);
                     return;
                 }
-                thWidth = $thumb.width();
-                thHeight = $thumb.height();
-                offset = $thumb.offset();
+                $thumb = $(thumb);
+                $thumb.attr('title',thumbTitle);
+
+                $main.html('').append($thumb);
+
+                thWidth = thumb.naturalWidth;
+                thHeight = thumb.naturalHeight;
+
 
                 $this.width(thWidth);
 
@@ -159,33 +165,31 @@
             function show(){
                 artZoomHover = true;
                 $zoomContainer.show();
-                artZoomInterval = setInterval(move,30);
+                artZoomInterval = setInterval(move,s.update);
                 // Si no esta iniciada la imagen de zoom
                 if (artZoomInited)
                     return;
                 init();
             }
             function init(){
-                $imgZoom = null;
-                setupZoom();
-
                 imgZoom = new Image()
                 imgZoom.src = $main.attr('href');
-                //console.log(imgZoom);
-                $imgZoom = $(imgZoom);
+
+                setupZoom();
                 artZoomInited = true;
             }
             function setupZoom(){
-                if (!$imgZoom || img_error($imgZoom[0])){
+                if (!imgZoom || img_error(imgZoom)){
                     setTimeout(setupZoom,200);
                     return;
                 }
                 $zoomContainer
-                .css('background','url("'+$main.attr('href')+'") no-repeat 50% 50%')
+                .css('background','url("'+imgZoom.src+'") no-repeat 50% 50%')
                 .removeClass('az-loading');
 
-                zoomWidth = $imgZoom[0].naturalWidth -azZoomWidth;
-                zoomHeight = $imgZoom[0].naturalHeight -azZoomHeight;
+                zoomWidth = imgZoom.naturalWidth -azZoomWidth;
+                zoomHeight = imgZoom.naturalHeight -azZoomHeight;
+
 
                 ratioX = zoomWidth/thWidth;
                 ratioY = zoomHeight/thHeight;
@@ -203,12 +207,14 @@
             function move(){
                 if (!artZoomHover || !artZoomReady)
                     return;
+                var offset = $thumb.offset();
                 var pX = x - offset.left;
                 var pY = y - offset.top;
-                var zoomX = Math.round(pX*ratioX);
-                var zoomY = Math.round(pY*ratioY);
+                var zoomX = pX*ratioX;
+                var zoomY = pY*ratioY;
                 zoomX = (zoomX > zoomWidth) ? zoomWidth : zoomX;
                 zoomY = (zoomY > zoomHeight) ? zoomHeight : zoomY;
+
                 $zoomContainer.css({
                     'background-position': -zoomX + 'px '+ -zoomY + 'px'
                 });
@@ -223,10 +229,10 @@
                 $.each($gallery,function(){
                     var $this = $(this);
                     var data = $this.data();
-                    $this.append($('<img src="'+data.smallThumb+'" alt="'+(data.alt ? data.alt : '')+'" title="'+(data.title ? data.title : '')+'" />'));
+                    $this.append($('<img src="'+data.smallThumb+'" title="'+(data.title ? data.title : '')+'" />'));
                 });
                 $galleryOuter = $('<div class="az-gal-relative"/>');
-                $galleryControls = $('<a href="javascript:;" class="az-gal-control az-gal-prev" data-type="previous">'+s.prevText+'</a><a href="javascript:;" class="az-gal-control az-gal-next" data-type="next">'+s.nextText+'</a>');
+                $galleryControls = $('<a href="javascript:;" class="az-gal-control az-disabled az-gal-prev" data-type="previous">'+s.prevText+'</a><a href="javascript:;" class="az-gal-control az-gal-next" data-type="next">'+s.nextText+'</a>');
                 $galleryImgs = $('img',$gallery);
 
                 $gallery
@@ -255,13 +261,15 @@
                     if(data.bigThumb == $thumb.attr('src'))
                         return;
 
+                    if(s.showControls)
+                        $galleryControls.hide();
+
                     $thumb = null;
                     thWidth = false;
-                    setup();
-
-                    $thumb = $('img',$main).attr('src',data.bigThumb);
+                    thumb = new Image();
+                    thumb.src = data.bigThumb;
+                    thumbTitle = (data.title ? data.title : '');
                     $main.attr('href',$this.attr('href'));
-                    $thumb.attr('title',(data.title ? data.title : ''));
 
                     $zoomContainer
                     .css('background','#FFF')
@@ -269,6 +277,8 @@
 
                     artZoomInited = false;
                     artZoomReady = false;
+
+                    setup();
                     initGallery();
                 });
                 $galleryControls.click(function(){
@@ -326,6 +336,13 @@
                 });
                 galleryItemWidth = galImgsWidth + s.galleryMargin;
                 galleryVisibleItems = Math.floor(thWidth/galImgsWidth);
+
+                if (s.showControls){
+                    if ($gallery.length <= galleryVisibleItems)
+                        $galleryCarrusel.css('left','0px');
+                    else
+                        $galleryControls.show();
+                }
             }
             function initColorbox(){
                 if($.type($.colorbox) !== 'function'){
