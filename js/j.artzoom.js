@@ -33,9 +33,11 @@
             if( options )
                 $.extend(true,s,options);
 
-            var $this = $(this);
-            var galleryEnabled = s.enableGallery;
-            var $main = $('> a',$this);
+            var
+            $this = $(this),
+            galleryEnabled = s.enableGallery,
+            $main = $('> a',$this);
+
             if ($main.length == 1)
                 galleryEnabled = false;
             else if($main.length > 1)
@@ -45,47 +47,51 @@
                 $main.after($main.clone());
             $main.addClass('az-main');
             // THUMBNAIL
-            var maData = $main.data();
-            var thumbTitle;
-            var thumb;
-            var $thumb;
+            var
+            maData = $main.data(),
+            thumbTitle,
+            thumb,
+            $thumb;
 
             // GALERIA
-            var $gallery = $('> a',$this).not('.az-main');
-            var $galleryImgs;
-            var $galleryCarrusel;
-            var $galleryControls;
-            var $galleryOuter;
-            var galleryCurrentItem = 0
-            var galImgsWidth;
-            var galImgsHeight;
-            var galleryItemWidth;
-            var galleryVisibleItems;
+            var
+            $gallery = $('> a',$this).not('.az-main'),
+            $galleryImgs,
+            $galleryCarrusel,
+            $galleryControls,
+            $galleryOuter,
+            galleryCurrentItem = 0,
+            galImgsWidth,
+            galImgsHeight,
+            galleryItemWidth,
+            galleryVisibleItems;
 
             // COLORBOX
-            var $colorboxTrigger;
-            var colorboxInited = false;
-            var colorboxTimeout;
+            var
+            $colorboxTrigger,
+            colorboxInited = false,
+            colorboxTimeout;
 
             // ZOOM
-            var imgZoom;
-            var azZoomWidth;
-            var azZoomHeight;
-            var thWidth;
-            var thHeight;
-            var zoomWidth;
-            var zoomHeight;
-            var ratioX;
-            var ratioY
-            var x;
-            var y;
+            var
+            imgZoom,
+            azZoomWidth,
+            azZoomHeight,
+            thWidth,
+            thHeight,
+            zoomWidth,
+            zoomHeight,
+            ratioX,
+            ratioY,
+            x,
+            y;
 
-            var artZoomInterval;
-            var artZoomHover = false;
-            var artZoomInited = false;
-            var artZoomReady = false;
-
-            var $zoomContainer = $('<div class="az-zoom az-loading"/>');
+            var
+            artZoomInterval,
+            artZoomHover = false,
+            artZoomInited = false,
+            artZoomReady = false,
+            $zoomContainer = $('<div class="az-zoom az-loading"/>');
 
             $this
             .addClass('az-container')
@@ -146,11 +152,12 @@
 
                 $main.html('').append($thumb);
 
-                thWidth = thumb.naturalWidth;
-                thHeight = thumb.naturalHeight;
+                thWidth = $thumb.width();
+                thHeight = $thumb.height();
 
 
                 $this.width(thWidth);
+                $main.width(thWidth).height(thHeight);
 
                 azZoomWidth = (s.width == 'auto' ? thWidth : parseInt(s.width));
                 azZoomHeight = (s.height == 'auto' ? thHeight : parseInt(s.height));
@@ -187,9 +194,8 @@
                 .css('background','url("'+imgZoom.src+'") no-repeat 50% 50%')
                 .removeClass('az-loading');
 
-                zoomWidth = imgZoom.naturalWidth -azZoomWidth;
-                zoomHeight = imgZoom.naturalHeight -azZoomHeight;
-
+                zoomWidth = imgZoom.width -azZoomWidth;
+                zoomHeight = imgZoom.height -azZoomHeight;
 
                 ratioX = zoomWidth/thWidth;
                 ratioY = zoomHeight/thHeight;
@@ -373,7 +379,7 @@
                 });
             }
             function img_error(img){
-                if (!img.complete || (typeof img.naturalWidth != "undefined" && img.naturalWidth== 0))
+                if (!img.complete || img.width == 0 || (typeof img.naturalWidth != "undefined" && img.naturalWidth == 0))
                     return true;
                 return false;
             }

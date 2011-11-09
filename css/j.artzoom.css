@@ -3,7 +3,7 @@
 .az-container div.az-zoom{ background-color: #FFF; border: 1px solid #CCC; box-shadow: 1px 1px 5px #000; -moz-box-shadow: 1px 1px 5px #000; -webkit-box-shadow: 1px 1px 5px #000; }
 .az-container div.az-area{ background: #FFF; opacity: 0.4; }
 .az-container .az-cursor{ cursor: crosshair; }
-.az-container div.az-gal-relative{ margin-top: 5px; }
+.az-container div.az-gal-relative{ padding-top: 5px; }
 .az-container a.az-gal-control { top: 0; padding: 0 3px; text-decoration: none; opacity: 0.6; color: #000; background: #FFF; font: 32px/20px Arial; height: 25px; }
 .az-container a.az-gal-control:hover { opacity: 0.9; }
 .az-container a.az-gal-prev { left: 0; }
@@ -13,10 +13,13 @@
 .az-container a.az-colorbox-trigger:hover{ opacity: 1; }
 .az-container span.az-colorbox-text{ font: 12px/30px Arial; color: #FFF; white-space: nowrap; }
 
-.az-container a.az-main img{ height: auto; width: auto; max-width: none; max-height: none; }
+.az-container a, .az-container a:active, .az-container a:focus{ outline: 0; }
+.az-container a.az-main img, .az-container a.az-gallery img{ border: 0px; height: auto; width: auto; max-width: none; max-height: none; }
+
 /* NEEDED STYLES */
 .az-container{ position: relative; }
-.az-container a.az-colorbox-trigger { position: absolute; display: none; background: url("artzoom/search.png") no-repeat 10px 50% transparent; }
+.az-container a.az-main { display: block; }
+.az-container a.az-colorbox-trigger { outline: none; position: absolute; display: none; background: url("artzoom/search.png") no-repeat 10px 50% #000; }
 .az-container span.az-colorbox-text{ margin-left: 30px; }
 .az-container div.az-zoom { display: none; position: absolute; top: 0px; left: 0px; z-index: 10; }
 .az-container .az-loading { background: url("artzoom/loader.gif") no-repeat scroll 50% 50% #FFF !important; }
@@ -24,4 +27,4 @@
 .az-container div.az-gal-container{ position: relative; overflow: hidden; }
 .az-container ul.az-gal-carrusel { position: absolute; margin: 0px; padding: 0px; list-style: none; top: 0px; left: 0px; clear: both; }
 .az-container li.az-gal-item { display: block; margin: 0px; padding: 0px; list-style: none; float: left; }
-.az-container a.az-gal-control { display: none; position: absolute; }
+.az-container a.az-gal-control { outline: none; display: none; position: absolute; }
